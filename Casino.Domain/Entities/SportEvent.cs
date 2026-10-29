@@ -11,7 +11,6 @@ public class SportEvent : IEntity
     public DateTime StartTime { get; set; }
     public bool IsActive { get; set; }
 
-    // null = událost zatím nebyla vyhodnocena
     public EventResult? Result { get; set; }
 
     public ApplicationUser Bookmaker { get; set; } = null!;

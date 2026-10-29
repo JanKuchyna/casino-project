@@ -21,7 +21,6 @@ public class CasinoDbContext : IdentityDbContext<ApplicationUser>, IUnitOfWork
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        // Identity tabulky (AspNetUsers, AspNetRoles, ...) musí být nakonfigurovány jako první
         base.OnModelCreating(builder);
 
         builder.Entity<ApplicationUser>(e =>
@@ -32,7 +31,6 @@ public class CasinoDbContext : IdentityDbContext<ApplicationUser>, IUnitOfWork
 
         builder.Entity<Wallet>(e =>
         {
-            // 1:1 – EF vytvoří na UserId unikátní index
             e.HasOne(w => w.User)
                 .WithOne(u => u.Wallet)
                 .HasForeignKey<Wallet>(w => w.UserId)
@@ -69,7 +67,6 @@ public class CasinoDbContext : IdentityDbContext<ApplicationUser>, IUnitOfWork
 
         builder.Entity<Ticket>(e =>
         {
-            // Dvě vazby na stejnou tabulku uživatelů – sázkař a bookmaker
             e.HasOne(t => t.User)
                 .WithMany(u => u.Tickets)
                 .HasForeignKey(t => t.UserId)
@@ -87,7 +84,6 @@ public class CasinoDbContext : IdentityDbContext<ApplicationUser>, IUnitOfWork
                 .WithMany(t => t.Items)
                 .HasForeignKey(i => i.TicketId)
                 .OnDelete(DeleteBehavior.Cascade);
-            // Kurz, na který už někdo vsadil, nejde smazat
             e.HasOne(i => i.Odd)
                 .WithMany(o => o.TicketItems)
                 .HasForeignKey(i => i.OddId)

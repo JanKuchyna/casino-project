@@ -13,10 +13,8 @@ public class ApplicationUser : IdentityUser
 
     public Wallet? Wallet { get; set; }
 
-    // Tikety, které uživatel podal jako sázkař
     public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 
-    // Události a tikety, které uživatel spravuje jako bookmaker
     public ICollection<SportEvent> ManagedSportEvents { get; set; } = new List<SportEvent>();
     public ICollection<Ticket> ManagedTickets { get; set; } = new List<Ticket>();
 }

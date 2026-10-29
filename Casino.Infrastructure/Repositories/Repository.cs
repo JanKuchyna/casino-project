@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Casino.Infrastructure.Repositories;
 
-// Změny se neukládají zde, ale přes IUnitOfWork.SaveChangesAsync
 public class Repository<T> : IRepository<T> where T : class, IEntity
 {
     protected readonly CasinoDbContext Context;

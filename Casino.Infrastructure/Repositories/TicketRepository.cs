@@ -31,7 +31,6 @@ public class TicketRepository : Repository<Ticket>, ITicketRepository
             .OrderByDescending(t => t.PlacedAt)
             .ToListAsync(cancellationToken);
 
-    // Sledované (bez AsNoTracking), protože se tikety po vyhodnocení rovnou upravují
     public async Task<IReadOnlyList<Ticket>> GetPendingBySportEventAsync(int sportEventId, CancellationToken cancellationToken = default)
         => await Set
             .Include(t => t.Items).ThenInclude(i => i.Odd).ThenInclude(o => o.SportEvent)

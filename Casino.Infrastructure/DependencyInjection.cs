@@ -16,7 +16,6 @@ public static class DependencyInjection
 
         services.AddDbContext<CasinoDbContext>(options => options.UseSqlServer(connectionString));
 
-        // Repozitáře i UnitOfWork sdílí stejnou instanci DbContextu v rámci jednoho requestu
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<CasinoDbContext>());
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<ISportEventRepository, SportEventRepository>();
