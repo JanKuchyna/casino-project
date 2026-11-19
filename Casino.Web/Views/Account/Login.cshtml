@@ -1,0 +1,33 @@
+@{
+    ViewData["Title"] = "Přihlášení";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h3 mb-4 text-center">Přihlášení</h1>
+
+                @* Formulář zatím není napojený na backend. *@
+                <form onsubmit="event.preventDefault();">
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" autocomplete="username" required />
+                        <label for="email">E-mail</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Heslo" autocomplete="current-password" required />
+                        <label for="password">Heslo</label>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe" />
+                        <label class="form-check-label" for="rememberMe">Zapamatovat si mě</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2">Přihlásit se</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
