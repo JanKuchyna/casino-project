@@ -1,5 +1,6 @@
 using Casino.Domain.Interfaces;
 using Casino.Infrastructure.Data;
+using Casino.Infrastructure.Identity;
 using Casino.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,15 @@ public static class DependencyInjection
             ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
         services.AddDbContext<CasinoDbContext>(options => options.UseSqlServer(connectionString));
+
+        services.AddIdentityCore<ApplicationUser>(options =>
+            {
+                options.Password.RequiredLength = 4;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            })
+            .AddEntityFrameworkStores<CasinoDbContext>();
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<CasinoDbContext>());
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

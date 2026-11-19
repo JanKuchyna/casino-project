@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Casino.Application\Casino.Application.csproj" />
     <ProjectReference Include="..\Casino.Domain\Casino.Domain.csproj" />
   </ItemGroup>
 

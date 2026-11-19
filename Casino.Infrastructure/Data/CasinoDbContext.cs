@@ -1,5 +1,7 @@
 using Casino.Domain.Entities;
+using Casino.Domain.Enums;
 using Casino.Domain.Interfaces;
+using Casino.Infrastructure.Data.Lookups;
 using Casino.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -97,6 +99,51 @@ public class CasinoDbContext : IdentityDbContext<ApplicationUser>, IUnitOfWork
             e.Property(g => g.Name).HasMaxLength(100);
             e.Property(g => g.Description).HasMaxLength(1000);
             e.Property(g => g.WinRate).HasPrecision(5, 2);
+        });
+
+        ConfigureEnumLookup<UserRole>(builder, "UserRoles");
+        ConfigureEnumLookup<BetType>(builder, "BetTypes");
+        ConfigureEnumLookup<EventResult>(builder, "EventResults");
+        ConfigureEnumLookup<TicketStatus>(builder, "TicketStatuses");
+        ConfigureEnumLookup<TransactionType>(builder, "TransactionTypes");
+
+        builder.Entity<ApplicationUser>()
+            .HasOne<EnumLookup<UserRole>>().WithMany()
+            .HasForeignKey(u => u.Role)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Odd>()
+            .HasOne<EnumLookup<BetType>>().WithMany()
+            .HasForeignKey(o => o.BetType)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<SportEvent>()
+            .HasOne<EnumLookup<EventResult>>().WithMany()
+            .HasForeignKey(s => s.Result)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Ticket>()
+            .HasOne<EnumLookup<TicketStatus>>().WithMany()
+            .HasForeignKey(t => t.Status)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<WalletTransaction>()
+            .HasOne<EnumLookup<TransactionType>>().WithMany()
+            .HasForeignKey(t => t.TransactionType)
+            .OnDelete(DeleteBehavior.Restrict);
+    }
+
+    private static void ConfigureEnumLookup<TEnum>(ModelBuilder builder, string tableName)
+        where TEnum : struct, Enum
+    {
+        builder.Entity<EnumLookup<TEnum>>(e =>
+        {
+            e.ToTable(tableName);
+            e.HasKey(l => l.Id);
+            e.Property(l => l.Id).ValueGeneratedNever();
+            e.Property(l => l.Name).HasMaxLength(50);
+            e.HasData(Enum.GetValues<TEnum>()
+                .Select(v => new EnumLookup<TEnum> { Id = v, Name = v.ToString() }));
         });
     }
 }
