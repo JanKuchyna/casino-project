@@ -12,7 +12,5 @@ public class Ticket : IEntity
     public decimal Stake { get; set; }
     public TicketStatus Status { get; set; } = TicketStatus.Pending;
 
-    public ApplicationUser User { get; set; } = null!;
-    public ApplicationUser Bookmaker { get; set; } = null!;
     public ICollection<TicketItem> Items { get; set; } = new List<TicketItem>();
 }

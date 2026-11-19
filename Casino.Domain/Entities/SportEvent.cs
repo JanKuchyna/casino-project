@@ -13,6 +13,5 @@ public class SportEvent : IEntity
 
     public EventResult? Result { get; set; }
 
-    public ApplicationUser Bookmaker { get; set; } = null!;
     public ICollection<Odd> Odds { get; set; } = new List<Odd>();
 }

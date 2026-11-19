@@ -1,7 +1,8 @@
+using Casino.Domain.Entities;
 using Casino.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 
-namespace Casino.Domain.Entities;
+namespace Casino.Infrastructure.Identity;
 
 public class ApplicationUser : IdentityUser
 {

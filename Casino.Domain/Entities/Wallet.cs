@@ -8,6 +8,5 @@ public class Wallet : IEntity
     public string UserId { get; set; } = string.Empty;
     public decimal Balance { get; set; }
 
-    public ApplicationUser User { get; set; } = null!;
     public ICollection<WalletTransaction> Transactions { get; set; } = new List<WalletTransaction>();
 }

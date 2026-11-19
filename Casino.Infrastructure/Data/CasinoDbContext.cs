@@ -1,5 +1,6 @@
 using Casino.Domain.Entities;
 using Casino.Domain.Interfaces;
+using Casino.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,7 +32,7 @@ public class CasinoDbContext : IdentityDbContext<ApplicationUser>, IUnitOfWork
 
         builder.Entity<Wallet>(e =>
         {
-            e.HasOne(w => w.User)
+            e.HasOne<ApplicationUser>()
                 .WithOne(u => u.Wallet)
                 .HasForeignKey<Wallet>(w => w.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -49,7 +50,7 @@ public class CasinoDbContext : IdentityDbContext<ApplicationUser>, IUnitOfWork
 
         builder.Entity<SportEvent>(e =>
         {
-            e.HasOne(s => s.Bookmaker)
+            e.HasOne<ApplicationUser>()
                 .WithMany(u => u.ManagedSportEvents)
                 .HasForeignKey(s => s.BookmakerId)
                 .OnDelete(DeleteBehavior.Restrict);
@@ -67,11 +68,11 @@ public class CasinoDbContext : IdentityDbContext<ApplicationUser>, IUnitOfWork
 
         builder.Entity<Ticket>(e =>
         {
-            e.HasOne(t => t.User)
+            e.HasOne<ApplicationUser>()
                 .WithMany(u => u.Tickets)
                 .HasForeignKey(t => t.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
-            e.HasOne(t => t.Bookmaker)
+            e.HasOne<ApplicationUser>()
                 .WithMany(u => u.ManagedTickets)
                 .HasForeignKey(t => t.BookmakerId)
                 .OnDelete(DeleteBehavior.Restrict);

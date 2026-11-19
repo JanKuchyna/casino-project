@@ -21,7 +21,7 @@ namespace Casino.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Casino.Domain.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("Casino.Infrastructure.Identity.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -450,7 +450,7 @@ namespace Casino.Infrastructure.Migrations
 
             modelBuilder.Entity("Casino.Domain.Entities.SportEvent", b =>
                 {
-                    b.HasOne("Casino.Domain.Entities.ApplicationUser", "Bookmaker")
+                    b.HasOne("Casino.Infrastructure.Identity.ApplicationUser", "Bookmaker")
                         .WithMany("ManagedSportEvents")
                         .HasForeignKey("BookmakerId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -461,13 +461,13 @@ namespace Casino.Infrastructure.Migrations
 
             modelBuilder.Entity("Casino.Domain.Entities.Ticket", b =>
                 {
-                    b.HasOne("Casino.Domain.Entities.ApplicationUser", "Bookmaker")
+                    b.HasOne("Casino.Infrastructure.Identity.ApplicationUser", "Bookmaker")
                         .WithMany("ManagedTickets")
                         .HasForeignKey("BookmakerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Casino.Domain.Entities.ApplicationUser", "User")
+                    b.HasOne("Casino.Infrastructure.Identity.ApplicationUser", "User")
                         .WithMany("Tickets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -499,7 +499,7 @@ namespace Casino.Infrastructure.Migrations
 
             modelBuilder.Entity("Casino.Domain.Entities.Wallet", b =>
                 {
-                    b.HasOne("Casino.Domain.Entities.ApplicationUser", "User")
+                    b.HasOne("Casino.Infrastructure.Identity.ApplicationUser", "User")
                         .WithOne("Wallet")
                         .HasForeignKey("Casino.Domain.Entities.Wallet", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -530,7 +530,7 @@ namespace Casino.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Casino.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("Casino.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -539,7 +539,7 @@ namespace Casino.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Casino.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("Casino.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -554,7 +554,7 @@ namespace Casino.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Casino.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("Casino.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -563,14 +563,14 @@ namespace Casino.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Casino.Domain.Entities.ApplicationUser", null)
+                    b.HasOne("Casino.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Casino.Domain.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("Casino.Infrastructure.Identity.ApplicationUser", b =>
                 {
                     b.Navigation("ManagedSportEvents");
 
