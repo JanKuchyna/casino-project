@@ -1,6 +1,7 @@
 using Casino.Application;
 using Casino.Infrastructure;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Casino.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +16,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LogoutPath = "/logout";
         options.AccessDeniedPath = "/login";
     });
-builder.Services.AddControllersWithViews();
+// Každá akce controlleru vyžaduje přihlášení, pokud nemá [AllowAnonymous].
+// Nepřihlášený uživatel je přesměrován na LoginPath (/login).
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add(new AuthorizeFilter());
+});
 
 var app = builder.Build();
 

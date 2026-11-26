@@ -23,10 +23,12 @@ public static class DependencyInjection
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
+                options.User.RequireUniqueEmail = true;
             })
             .AddEntityFrameworkStores<CasinoDbContext>();
 
         services.AddScoped<IUserAuthenticator, UserAuthenticator>();
+        services.AddScoped<IUserRegistrar, UserRegistrar>();
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<CasinoDbContext>());
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
